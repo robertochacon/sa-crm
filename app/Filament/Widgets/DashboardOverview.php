@@ -18,19 +18,19 @@ class DashboardOverview extends BaseWidget
             Stat::make('Empresas', $companies)
                 ->description('Total de empresas registras')
                 ->descriptionIcon('heroicon-m-users')
-                ->color('warning')
+                ->color('primary')
                 ->chart([1,1]),
             Stat::make('Planes', $plans)
                 ->description('Total de planes registrados')
                 ->descriptionIcon('heroicon-m-clipboard-document-list')
-                ->color('warning')
+                ->color('primary')
                 ->chart([1,1]),
             Stat::make('Total de pagos', 0)
                 ->description('Total de pagos del mes')
                 ->descriptionIcon('heroicon-m-currency-dollar')
                 // ->url("payments_report")
                 // ->openUrlInNewTab()
-                ->color('#fd3232')
+                ->color('primary')
                 ->chart([1,1]),
         ];
     }
