@@ -33,6 +33,9 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Detalles del usuario')
                 ->schema([
+                    Forms\Components\TextInput::make('code')
+                        ->label('Codigo')
+                        ->required(),
                     Forms\Components\TextInput::make('name')
                         ->label('Nombre')
                         ->required(),
@@ -68,6 +71,9 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('code')
+                    ->label('Codigo')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
                     ->searchable(),

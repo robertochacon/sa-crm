@@ -11,11 +11,12 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'api'], function () {
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('login/code', [AuthController::class, 'loginWithCode']);
     Route::post('register', [AuthController::class, 'register']);
 });
 
 Route::middleware(['auth:api'])->group(function () {
-    
+
     Route::get('/test', [TestController::class, 'index']);
 
     Route::post('logout', [AuthController::class, 'logout']);

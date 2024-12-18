@@ -125,6 +125,65 @@ class AuthController extends Controller
 
     /**
      * @OA\Post(
+     *     path="/api/login/code",
+     *     summary="Inicio de sesión con código",
+     *     description="Inicia sesión y devuelve un token JWT usando un código único",
+     *     operationId="loginByCode",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"code"},
+     *             @OA\Property(property="code", type="string", example="ABC123")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login exitoso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="access_token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."),
+     *             @OA\Property(property="token_type", type="string", example="bearer"),
+     *             @OA\Property(property="expires_in", type="integer", example=3600),
+     *             @OA\Property(property="user", type="object", example={"id": 1, "name": "John Doe"})
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Código inválido",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Unauthorized")
+     *         )
+     *     )
+     * )
+     */
+    public function loginWithCode(Request $request)
+    {
+        // Validar la solicitud
+        $request->validate([
+            'code' => 'required|string|exists:users,code', // Suponiendo que `login_code` es el campo donde almacenas el código
+        ]);
+
+        // Buscar al usuario con el código proporcionado
+        $user = User::where('code', $request->code)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Generar el token JWT para el usuario
+        $token = JWTAuth::fromUser($user);
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'user' => $user,
+        ]);
+    }
+
+
+    /**
+     * @OA\Post(
      *     path="/api/logout",
      *     summary="Cerrar sesión",
      *     description="Cierra la sesión y revoca el token JWT",

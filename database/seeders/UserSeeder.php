@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
 
         ModelsUser::create([
             'company_id' => 1,
+            'code' => '123',
             'name' => 'Administrador',
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin'),
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder
 
         ModelsUser::create([
             'company_id' => 2,
+            'code' => '1234',
             'name' => 'Admin Rest. Delicia',
             'email' => 'rd@admin.com',
             'password' => bcrypt('rd'),
@@ -36,6 +38,7 @@ class UserSeeder extends Seeder
 
         ModelsUser::create([
             'company_id' => 1,
+            'code' => '12345',
             'name' => 'John Doe',
             'email' => 'john.doe@example.com',
             'password' => bcrypt('password123'),
