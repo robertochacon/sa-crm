@@ -8,14 +8,12 @@ class WebSocketService
 {
     protected $websocketUrl;
     protected $websocketToken;
-    protected $websocketChannel;
 
     public function __construct()
     {
         // URL del servidor WebSocket
         $this->websocketUrl = env('WSS_HOST') ?? 'ws://localhost:8080';
         $this->websocketToken = env('WSS_Key');
-        $this->websocketChannel = env('WSS_CHANNEL') ?? 'channel-default';
     }
 
     /**
