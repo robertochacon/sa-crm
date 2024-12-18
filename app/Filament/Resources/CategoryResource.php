@@ -31,22 +31,24 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('company_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('icon'),
+                // Forms\Components\TextInput::make('icon'),
+                Forms\Components\FileUpload::make('icon')
+                    ->label('Icono')
+                    ->image()
+                    ->directory('categories')
+                    ->preserveFilenames(),
+                Forms\Components\TextInput::make('name')
+                ->label('Nombre'),
                 Forms\Components\Toggle::make('status')
+                    ->label('Estado')
                     ->required(),
-            ]);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('company_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('icon')
