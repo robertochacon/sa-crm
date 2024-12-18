@@ -71,7 +71,8 @@ class CompaniesResource extends Resource
                         ->disk('public')
                         ->directory('companies-images')
                         ->circleCropper()
-                        ->downloadable(),
+                        ->downloadable()
+                        ->optimize('jpg'),
                     Forms\Components\Select::make('plan_id')
                         ->label('Plan')
                         ->options(Plan::all()->pluck('name', 'id'))
@@ -160,5 +161,11 @@ class CompaniesResource extends Resource
             'create' => Pages\CreateCompanies::route('/create'),
             'edit' => Pages\EditCompanies::route('/{record}/edit'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        return $user && $user->isAdmin();
     }
 }

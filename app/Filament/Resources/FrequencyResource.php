@@ -81,4 +81,10 @@ class FrequencyResource extends Resource
             'index' => Pages\ManageFrequencies::route('/'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        return $user && $user->isAdmin();
+    }
 }

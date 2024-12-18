@@ -81,4 +81,10 @@ class SupportResource extends Resource
             'index' => Pages\ManageSupports::route('/'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        return $user && $user->isAdmin();
+    }
 }

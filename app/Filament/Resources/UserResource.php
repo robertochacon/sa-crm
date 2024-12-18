@@ -59,6 +59,7 @@ class UserResource extends Resource
                 Tables\Columns\ToggleColumn::make('status')
                     ->label('Estado'),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

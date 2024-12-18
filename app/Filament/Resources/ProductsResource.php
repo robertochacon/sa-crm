@@ -3,15 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductsResource\Pages;
-use App\Filament\Resources\ProductsResource\RelationManagers;
 use App\Models\Product;
+use App\Models\Category;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Form;
 
 class ProductsResource extends Resource
 {
@@ -31,7 +29,37 @@ class ProductsResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('category_id')
+                    ->label('Categoría')
+                    ->options(Category::all()->pluck('name', 'id'))
+                    ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->label('Nombre')
+                    ->required(),
+                Forms\Components\TextInput::make('description')
+                    ->label('Descripción')
+                    ->nullable(),
+                Forms\Components\TextInput::make('price')
+                    ->label('Precio')
+                    ->numeric()
+                    ->nullable(),
+                Forms\Components\Toggle::make('status')
+                    ->label('Estado')->default(true),
+                Forms\Components\FileUpload::make('images')
+                    ->label('Imagenes')
+                    ->image()
+                    ->multiple()
+                    ->imageEditor()
+                    ->circleCropper()
+                    ->disk('public')
+                    ->directory('products-images')
+                    ->circleCropper()
+                    ->downloadable()
+                    ->optimize('jpg')
+                    ->resize(50)
+                    ->panelLayout('grid')
+                    ->reorderable()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -39,11 +67,26 @@ class ProductsResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\ImageColumn::make('images')
+                    ->circular()
+                    ->stacked()
+                    ->limit(3),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nombre')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Categoría'),
+                Tables\Columns\TextColumn::make('price')
+                    ->money('DOP', locale: 'nl')
+                    ->label('Precio'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de creación')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\ToggleColumn::make('status')
+                    ->label('Estado'),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -56,9 +99,7 @@ class ProductsResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -68,5 +109,11 @@ class ProductsResource extends Resource
             'create' => Pages\CreateProducts::route('/create'),
             'edit' => Pages\EditProducts::route('/{record}/edit'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        return $user && $user->isSubscriber();
     }
 }

@@ -121,4 +121,10 @@ class PlanResource extends Resource
             'edit' => Pages\EditPlan::route('/{record}/edit'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        return $user && $user->isAdmin();
+    }
 }

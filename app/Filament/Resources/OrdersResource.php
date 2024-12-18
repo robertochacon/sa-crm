@@ -69,4 +69,10 @@ class OrdersResource extends Resource
             'edit' => Pages\EditOrders::route('/{record}/edit'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        return $user && $user->isSubscriber();
+    }
 }
