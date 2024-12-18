@@ -3,19 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrdersResource\Pages;
-use App\Filament\Resources\OrdersResource\RelationManagers;
-use App\Models\Orders;
+use App\Models\Category;
+use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrdersResource extends Resource
 {
-    protected static ?string $model = Orders::class;
+    protected static ?string $model = Order::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -31,7 +29,72 @@ class OrdersResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Repeater::make('products')
+                    ->label('Otros Productos')
+                    ->schema([
+                        Forms\Components\Select::make('category_id')
+                            ->label('Categoría')
+                            ->options(Category::all()->pluck('name', 'id'))
+                            ->required(),
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nombre')
+                            ->required(),
+                        Forms\Components\TextInput::make('price')
+                            ->label('Precio')
+                            ->numeric()
+                            ->nullable(),
+                        Forms\Components\TextInput::make('amount')
+                            ->label('Cantidad')
+                            ->numeric()
+                            ->nullable(),
+                        Forms\Components\TextInput::make('total')
+                            ->label('Total')
+                            ->numeric()
+                            ->nullable(),
+                    ])
+                    ->columns(5)
+                    ->cloneable()
+                    ->collapsible()
+                    ->reorderableWithDragAndDrop(true)
+                    ->columnSpanFull(),
+                Forms\Components\Section::make('Detalles de la Orden')
+                    ->schema([
+                        Forms\Components\Textarea::make('note')
+                            ->label('Nota')
+                            ->required(),
+                        Forms\Components\Textarea::make('extra')
+                            ->label('Extra'),
+                        Forms\Components\Select::make('status')
+                            ->label('Estado')
+                            ->options([
+                                'Recibida' => 'Recibida',
+                                'Preparando' => 'Preparando',
+                                'Completada' => 'Completada',
+                                'Facturada' => 'Facturada',
+                                'Cancelada' => 'Cancelada',
+                            ])
+                            ->default('Recibida')
+                            ->required(),
+                        Forms\Components\TextInput::make('table')
+                            ->label('Mesa')
+                            ->numeric()
+                            ->nullable(),
+                        Forms\Components\TextInput::make('subtotal')
+                            ->label('Subtotal')
+                            ->numeric()
+                            ->nullable(),
+                        Forms\Components\TextInput::make('total')
+                            ->label('Total')
+                            ->numeric()
+                            ->nullable(),
+                        Forms\Components\TextInput::make('itbis')
+                            ->label('ITBIS')
+                            ->numeric()
+                            ->nullable(),
+                        Forms\Components\Toggle::make('in_restaurant')
+                            ->label('En Restaurante')
+                            ->default(true),
+                    ])->columns(3)
             ]);
     }
 
@@ -39,7 +102,34 @@ class OrdersResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id')
+                    ->label('Code')
+                    ->sortable()
+                    ->default('N/A'),
+                Tables\Columns\TextColumn::make('table')
+                    ->label('Mesa')
+                    ->default('N/A'),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Estado')
+                    ->default('N/A'),
+                Tables\Columns\TextColumn::make('subtotal')
+                    ->label('Subtotal')
+                    ->money('DOP')
+                    ->default('N/A'),
+                Tables\Columns\TextColumn::make('total')
+                    ->label('Total')
+                    ->money('DOP')
+                    ->default('N/A'),
+                Tables\Columns\TextColumn::make('itbis')
+                    ->label('ITBIS')
+                    ->money('DOP')
+                    ->default('N/A'),
+                Tables\Columns\TextColumn::make('user.name'.' '.'user.last_name')
+                    ->label('Usuario')
+                    ->default('N/A'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha Creación')
+                    ->dateTime(),
             ])
             ->filters([
                 //
@@ -48,17 +138,8 @@ class OrdersResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

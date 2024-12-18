@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->json('products')->nullable();
-            $table->json('other_products')->nullable();
             $table->integer('table')->nullable();
             $table->decimal('subtotal', 10, 2)->nullable();
             $table->decimal('total', 10, 2)->nullable();

@@ -31,18 +31,21 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->label('Nombre'),
-                Forms\Components\TextInput::make('icon')
-                    ->label('Icono')
-                    ->url()
-                    ->suffixIcon('heroicon-m-globe-alt')
-                    ->suffixIconColor('primary'),
-                Forms\Components\Toggle::make('status')
-                    ->label('Estado')
-                    ->required(),
-            ])->columns(2);
+                Forms\Components\Section::make('Detalles de la categoría')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->label('Nombre'),
+                        Forms\Components\TextInput::make('icon')
+                            ->label('Icono')
+                            ->url()
+                            ->suffixIcon('heroicon-m-globe-alt')
+                            ->suffixIconColor('primary'),
+                        Forms\Components\Toggle::make('status')
+                            ->label('Estado')
+                            ->required(),
+                    ])->columns(2)
+            ]);
     }
 
     public static function table(Table $table): Table

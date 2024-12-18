@@ -29,37 +29,39 @@ class ProductsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('category_id')
-                    ->label('Categoría')
-                    ->options(Category::all()->pluck('name', 'id'))
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->label('Nombre')
-                    ->required(),
-                Forms\Components\TextInput::make('description')
-                    ->label('Descripción')
-                    ->nullable(),
-                Forms\Components\TextInput::make('price')
-                    ->label('Precio')
-                    ->numeric()
-                    ->nullable(),
-                Forms\Components\Toggle::make('status')
-                    ->label('Estado')->default(true),
-                Forms\Components\FileUpload::make('images')
-                    ->label('Imagenes')
-                    ->image()
-                    ->multiple()
-                    ->imageEditor()
-                    ->circleCropper()
-                    ->disk('public')
-                    ->directory('products-images')
-                    ->circleCropper()
-                    ->downloadable()
-                    ->optimize('jpg')
-                    ->resize(50)
-                    ->panelLayout('grid')
-                    ->reorderable()
-                    ->columnSpanFull(),
+                Forms\Components\Section::make('Detalles del producto')
+                    ->schema([
+                        Forms\Components\Select::make('category_id')
+                            ->label('Categoría')
+                            ->options(Category::all()->pluck('name', 'id'))
+                            ->required(),
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nombre')
+                            ->required(),
+                        Forms\Components\TextInput::make('price')
+                            ->label('Precio')
+                            ->numeric()
+                            ->nullable(),
+                        Forms\Components\Toggle::make('status')
+                            ->label('Estado')->default(true),
+                        Forms\Components\RichEditor::make('description')
+                            ->label('Descripción')
+                            ->nullable(),
+                        Forms\Components\FileUpload::make('images')
+                            ->label('Imagenes')
+                            ->image()
+                            ->multiple()
+                            ->imageEditor()
+                            ->circleCropper()
+                            ->disk('public')
+                            ->directory('products-images')
+                            ->circleCropper()
+                            ->downloadable()
+                            ->optimize('jpg')
+                            ->resize(50)
+                            ->panelLayout('grid')
+                            ->reorderable(),
+                    ])->columns(2),
             ]);
     }
 
