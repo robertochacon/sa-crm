@@ -25,8 +25,8 @@ class CompaniesSeeder extends Seeder
         ]);
 
         ModelsCompanies::create([
-            'full_name' => 'Negocio 1',
-            'short_name' => 'Negocio 1',
+            'full_name' => 'Restaurante la Delicia',
+            'short_name' => 'RD',
             'rnc' => '000000000',
             'website' => null,
             'phone' => null,

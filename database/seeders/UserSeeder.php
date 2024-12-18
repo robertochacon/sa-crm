@@ -25,10 +25,10 @@ class UserSeeder extends Seeder
         ]);
 
         ModelsUser::create([
-            'company_id' => 1,
-            'name' => 'Supervisor',
-            'email' => 'supervisor@supervisor.com',
-            'password' => bcrypt('supervisor'),
+            'company_id' => 2,
+            'name' => 'Admin Rest. Delicia',
+            'email' => 'rd@admin.com',
+            'password' => bcrypt('rd'),
             'remember_token' => null,
             'role' => 'subscriber',
             'created_at' => date("Y-m-d H:i:s")
