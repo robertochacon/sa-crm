@@ -14,7 +14,7 @@ class OrderRepository extends BaseRepository
     }
 
     public function allOrdersByCompapyId(int $company_id){
-        return $this->model->where("company_id", $company_id)->get();
+        return $this->model->with('user')->where("company_id", $company_id)->get();
     }
 
 }

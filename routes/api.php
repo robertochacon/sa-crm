@@ -32,6 +32,8 @@ Route::middleware(['auth:api'])->group(function () {
 
     //orders
     Route::get('/orders/{company_id}', [OrderController::class, 'index']);
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::post('/orders/{id}', [OrderController::class, 'update']);
 
     //test
     Route::get('/test', [TestController::class, 'index']);

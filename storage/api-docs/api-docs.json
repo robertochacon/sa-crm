@@ -503,6 +503,188 @@
                 }
             }
         },
+        "/api/orders": {
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Store order",
+                "description": "Store order",
+                "operationId": "store_order",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "products"
+                                ],
+                                "properties": {
+                                    "products": {
+                                        "type": "string",
+                                        "example": "[]"
+                                    },
+                                    "table": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "total": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "extra": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "user_id": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "in_restaurant": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "note": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/order/{id}": {
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update order",
+                "description": "Update order",
+                "operationId": "update_order",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "products"
+                                ],
+                                "properties": {
+                                    "products": {
+                                        "type": "string",
+                                        "example": "[]"
+                                    },
+                                    "table": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "total": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "extra": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "user_id": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "in_restaurant": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "note": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/products/{company_id}": {
             "get": {
                 "tags": [
