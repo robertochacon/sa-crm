@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseRepository
 {
-    private $model;
-    private $relations;
+    protected $model;
+    protected $relations;
 
     public function __construct(Model $model, array $relations = [])
     {

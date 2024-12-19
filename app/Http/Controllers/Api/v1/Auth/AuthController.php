@@ -164,7 +164,7 @@ class AuthController extends Controller
         ]);
 
         // Buscar al usuario con el código proporcionado
-        $user = User::where('code', $request->code)->first();
+        $user = User::with('company')->where('code', $request->code)->first();
 
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);

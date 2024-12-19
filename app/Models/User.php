@@ -52,6 +52,11 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
+    public function company()
+    {
+    	return $this->belongsTo('App\Models\Company', 'company_id');
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
@@ -64,14 +69,6 @@ class User extends Authenticatable implements JWTSubject
     public function isSubscriber(): bool {
         return $this->role === 'subscriber';
     }
-/*************  ✨ Codeium Command ⭐  *************/
-    /**
-     * Determine if the user has the 'chef' role.
-     *
-     * @return bool True if the user's role is 'chef', false otherwise.
-     */
-
-/******  c4470cd9-84c4-4653-8f3f-5d98622a8cde  *******/
 
     public function isChef(): bool {
         return $this->role === 'chef';
