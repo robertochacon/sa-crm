@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Category;
+namespace App\Http\Controllers\Api\v1\Product;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\CategoryRepository\CategoryRepository;
+use App\Repositories\ProductRepository\ProductRepository;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
-    protected $categoryRepository;
+    protected $productRepository;
 
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(ProductRepository $productRepository)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->productRepository = $productRepository;
     }
     /**
      * @OA\Get (
-     *     path="/api/categories/{company_id}",
-     *     operationId="all_categories",
-     *     tags={"Categories"},
-     *     summary="All categories",
-     *     description="All categories",
+     *     path="/api/products/{company_id}",
+     *     operationId="all_products",
+     *     tags={"Products"},
+     *     summary="All products",
+     *     description="All products",
      *     @OA\Parameter(
      *         in="path",
      *         name="company_id",
@@ -47,8 +47,8 @@ class CategoryController extends Controller
      */
     public function index($company_id)
     {
-        $categories = $this->categoryRepository->allCategoriesByCompanyId($company_id);
-        return response()->json(["data"=>$categories],200);
+        $products = $this->productRepository->allProductsByCompapyId($company_id);
+        return response()->json(["data"=>$products],200);
     }
 
 }
