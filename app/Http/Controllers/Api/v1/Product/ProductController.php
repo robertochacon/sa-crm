@@ -33,7 +33,10 @@ class ProductController extends Controller
      *         @OA\JsonContent(
      *              @OA\Property(property="id", type="number", example=1),
      *              @OA\Property(property="name", type="string", example=""),
-     *              @OA\Property(property="icon", type="string", example=""),
+     *              @OA\Property(property="price", type="string", example=""),
+     *              @OA\Property(property="images", type="string", example=""),
+     *              @OA\Property(property="category", type="string", example=""),
+     *              @OA\Property(property="status", type="string", example=""),
      *         )
      *     ),
      *      @OA\Response(

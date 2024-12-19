@@ -16,4 +16,15 @@ class EditOrders extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if (isset($data['products']) && is_array($data['products'])) {
+            foreach ($data['products'] as &$product) {
+                unset($product['product_options']); // Eliminar product_options de cada producto
+            }
+        }
+
+        return $data;
+    }
 }

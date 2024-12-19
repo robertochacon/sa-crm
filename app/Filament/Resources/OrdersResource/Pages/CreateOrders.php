@@ -14,6 +14,14 @@ class CreateOrders extends CreateRecord
     {
         $data['company_id'] = auth()->user()->company_id;
         $data['user_id'] = auth()->user()->id;
+
+        if (isset($data['products']) && is_array($data['products'])) {
+            foreach ($data['products'] as &$product) {
+                unset($product['product_options']); // Eliminar product_options de cada producto
+                unset($product['product_id']); // Eliminar product_options de cada producto
+            }
+        }
+
         return $data;
     }
 }

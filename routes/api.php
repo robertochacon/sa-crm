@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\v1\TestController;
 use App\Http\Controllers\Api\v1\Auth\AuthController;
 use App\Http\Controllers\Api\v1\Category\CategoryController;
+use App\Http\Controllers\Api\v1\Order\OrderController;
 use App\Http\Controllers\Api\v1\Product\ProductController;
 use App\Http\Controllers\Api\v1\WebSocket\WebSocketController;
 use Illuminate\Http\Request;
@@ -28,6 +29,9 @@ Route::middleware(['auth:api'])->group(function () {
 
     //products
     Route::get('/products/{company_id}', [ProductController::class, 'index']);
+
+    //orders
+    Route::get('/orders/{company_id}', [OrderController::class, 'index']);
 
     //test
     Route::get('/test', [TestController::class, 'index']);

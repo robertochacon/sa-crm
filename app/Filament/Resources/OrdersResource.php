@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\OrdersResource\Pages;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -30,15 +31,25 @@ class OrdersResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Repeater::make('products')
-                    ->label('Otros Productos')
+                    ->label('Productos')
                     ->schema([
                         Forms\Components\Select::make('category_id')
                             ->label('Categoría')
                             ->options(Category::all()->pluck('name', 'id'))
-                            ->required(),
-                        Forms\Components\TextInput::make('name')
-                            ->label('Nombre')
-                            ->required(),
+                            ->required()
+                            ->reactive()
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $set('product_options', Product::where('category_id', $state)->pluck('name','id')->toArray());
+                            }),
+                        Forms\Components\Select::make('name')
+                            ->label('Producto')
+                            ->options(fn (callable $get) =>
+                            $get('product_options')
+                                ? Product::whereIn('id', array_keys($get('product_options')))
+                                        ->pluck('name', 'name')
+                                : []
+                        )
+                        ->required(),
                         Forms\Components\TextInput::make('price')
                             ->label('Precio')
                             ->numeric()
