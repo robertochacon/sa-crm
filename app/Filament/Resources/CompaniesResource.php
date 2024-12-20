@@ -151,6 +151,7 @@ class CompaniesResource extends Resource
         return [
             RelationManagers\UsersRelationManager::class,
             RelationManagers\CategoriesRelationManager::class,
+            RelationManagers\ProductsRelationManager::class,
         ];
     }
 

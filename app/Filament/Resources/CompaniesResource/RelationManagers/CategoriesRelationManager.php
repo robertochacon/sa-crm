@@ -14,6 +14,12 @@ class CategoriesRelationManager extends RelationManager
 {
     protected static string $relationship = 'categories';
 
+    protected static ?string $title = 'Categorias';
+
+    protected static ?string $label = 'Categoria';
+
+    protected static ?string $pluralLabel = 'Categorias';
+
     public function form(Form $form): Form
     {
         return $form
