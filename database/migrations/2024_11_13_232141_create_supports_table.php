@@ -17,6 +17,10 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+
+        Schema::table('plans', function (Blueprint $table) {
+            $table->foreign('frequency_id')->references('id')->on('frequencies');
+        });
     }
 
     /**

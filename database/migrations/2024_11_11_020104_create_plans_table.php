@@ -13,12 +13,14 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->unsignedBigInteger('frequency_id')->nullable();
-            $table->foreign('frequency_id')->references('id')->on('frequencies');
             $table->unsignedBigInteger('support_id')->nullable();
-            $table->foreign('support_id')->references('id')->on('supports');
             $table->decimal('amount', 8, 2)->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
+        });
+
+        Schema::table('companies', function (Blueprint $table) {
+            $table->foreign('plan_id')->references('id')->on('plans');
         });
     }
 

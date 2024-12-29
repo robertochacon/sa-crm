@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('plan_id')->nullable();
-            $table->foreign('plan_id')->references('id')->on('plans');
             $table->string('full_name', 150)->nullable();
             $table->string('short_name', 60)->nullable();
             $table->string('rnc', 11)->nullable();
