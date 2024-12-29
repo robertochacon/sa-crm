@@ -19,7 +19,7 @@ return new class extends Migration
         });
 
         Schema::table('plans', function (Blueprint $table) {
-            $table->foreign('frequency_id')->references('id')->on('frequencies');
+            $table->foreign('support_id')->references('id')->on('supports');
         });
     }
 
